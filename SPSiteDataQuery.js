@@ -1,4 +1,4 @@
-(function (SP) {
+(function (window, SP) {
     'use strict';
 
     var each = function (collection, iteratee) {
@@ -13,6 +13,22 @@
                 iteratee(collection[i]);
             }
         }
+    };
+
+    var contains = function (array, value, caseInsensitive) {
+        for (var i = 0, length = array.length; i < length; i++) {
+            if (caseInsensitive) {
+                if (array[i].toLowerCase() === value.toLowerCase()) {
+                    return true;
+                }
+            } else {
+                if (array[i] === value) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     };
 
     function SPSiteDataQuery(webUrl) {
@@ -68,8 +84,10 @@
         The inner xml that specifies the view fields used in the query.
     
         SPSiteDataQuery.viewFields = 
-            <FieldRef Name="Title" Type="Text" />
-            <FieldRef Name="PercentComplete" Type="Number" />
+            <ViewFields>
+              <FieldRef Name="Title" Type="Text" />
+              <FieldRef Name="PercentComplete" Type="Number" />
+            </ViewFields>
         */
         this.viewFields = '';
 
@@ -88,8 +106,6 @@
             throw new Error('this.clientContext is not initialized.');
         }
 
-        var web = this.clientContext.get_web();
-
         var done = function (listlistItemCollections) {
             var listItems = [];
 
@@ -102,30 +118,72 @@
             successHandler(listItems);
         };
 
+        var camlQuery = new SP.CamlQuery();
+        var viewXml = '';
+
+        if (this.query) {
+            viewXml += this.query;
+        }
+
+        if (this.viewFields) {
+            viewXml += this.viewFields;
+        }
+
+        if (viewXml !== '') {
+            camlQuery.set_viewXml('<View>' + viewXml + '</View>');
+        }
+
+        var listSetting = this.lists;
+
+        var web = this.clientContext.get_web();
+
         if (this.webs.scope) {
             switch (this.webs.scope) {
                 case 'Recursive':
-                    getListItemsByWebRecursively(web, this.clientContext, done, errorHandler);
+                    getListItemsByWebRecursively(web, this.clientContext, camlQuery, listSetting, done, errorHandler);
 
                     break;
                 case 'SiteCollection':
                     web = this.clientContext.get_site().get_rootWeb();
 
-                    getListItemsByWebRecursively(web, this.clientContext, done, errorHandler);
+                    getListItemsByWebRecursively(web, this.clientContext, camlQuery, listSetting, done, errorHandler);
 
                     break;
                 default:
-                    getListItemsByWeb(web, this.clientContext, done, errorHandler);
+                    getListItemsByWeb(web, this.clientContext, camlQuery, listSetting, done, errorHandler);
 
                     break;
             }
         } else {
-            getListItemsByWeb(web, this.clientContext, done, errorHandler);
+            getListItemsByWeb(web, this.clientContext, camlQuery, listSetting, done, errorHandler);
         }
     };
 
+    // Determines whether the query includes the list
+    function isListValid(list, listSetting) {
+        var valid = false;
+
+        if (listSetting.lists) {
+            valid = contains(listSetting.lists, list.get_id().toString(), true);
+        } else {
+            if (listSetting.serverTemplate) {
+                valid = listSetting.serverTemplate === list.get_baseTemplate();
+            } else if (listSetting.baseType) {
+                valid = listSetting.baseType === list.get_baseType();
+            } else {
+                valid = true;
+            }
+
+            if (list.get_hidden() && !listSetting.hidden) {
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
     // Get list items under web
-    function getListItemsByWeb(web, clientContext, successHandler, errorHandler) {
+    function getListItemsByWeb(web, clientContext, camlQuery, listSetting, successHandler, errorHandler) {
         var lists = web.get_lists();
 
         // Array of SP.SPListItemCollection
@@ -134,10 +192,12 @@
         clientContext.load(lists);
         clientContext.executeQueryAsync(function (sender, args) {
             each(lists, function (list) {
-                var listItemCollection = list.getItems(new SP.CamlQuery());
+                if (isListValid(list, listSetting)) {
+                    var listItemCollection = list.getItems(camlQuery);
 
-                clientContext.load(listItemCollection);
-                listItemCollections.push(listItemCollection);
+                    clientContext.load(listItemCollection);
+                    listItemCollections.push(listItemCollection);
+                }
             });
 
             clientContext.executeQueryAsync(function (sender, args) {
@@ -147,7 +207,7 @@
     }
 
     // Get list items under web and its all subwebs
-    function getListItemsByWebRecursively(web, clientContext, successHandler, errorHandler) {
+    function getListItemsByWebRecursively(web, clientContext, camlQuery, listSetting, successHandler, errorHandler) {
         var lists = web.get_lists();
         var webs = web.get_webs();
 
@@ -166,16 +226,18 @@
             var count = subWebs.length;
 
             each(lists, function (list) {
-                var listItemCollection = list.getItems(new SP.CamlQuery());
+                if (isListValid(list, listSetting)) {
+                    var listItemCollection = list.getItems(camlQuery);
 
-                clientContext.load(listItemCollection);
-                listItemCollections.push(listItemCollection);
+                    clientContext.load(listItemCollection);
+                    listItemCollections.push(listItemCollection);
+                }
             });
 
             clientContext.executeQueryAsync(function (sender, args) {
                 if (count > 0) {
                     each(subWebs, function (subWeb) {
-                        getListItemsByWebRecursively(subWeb, clientContext, function (listItems) {
+                        getListItemsByWebRecursively(subWeb, clientContext, camlQuery, listSetting, function (listItems) {
                             count--;
                             listItemCollections.push.apply(listItemCollections, listItems);
 
@@ -190,4 +252,6 @@
             }, errorHandler);
         }, errorHandler);
     }
-})(SP);
+
+    window.SPSiteDataQuery = SPSiteDataQuery;
+})(window, SP);

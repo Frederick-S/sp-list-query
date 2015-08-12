@@ -160,26 +160,26 @@
     };
 
     // Determines whether the query includes the list
-    function isListValid(list, listSetting) {
-        var valid = false;
+    function isListIncludedInQuery(list, listSetting) {
+        var included = false;
 
         if (listSetting.lists) {
-            valid = contains(listSetting.lists, list.get_id().toString(), true);
+            included = contains(listSetting.lists, list.get_id().toString(), true);
         } else {
             if (listSetting.serverTemplate) {
-                valid = listSetting.serverTemplate === list.get_baseTemplate();
+                included = listSetting.serverTemplate === list.get_baseTemplate();
             } else if (listSetting.baseType) {
-                valid = listSetting.baseType === list.get_baseType();
+                included = listSetting.baseType === list.get_baseType();
             } else {
-                valid = true;
+                included = true;
             }
 
             if (list.get_hidden() && !listSetting.hidden) {
-                valid = false;
+                included = false;
             }
         }
 
-        return valid;
+        return included;
     }
 
     // Get list items under web
@@ -192,7 +192,7 @@
         clientContext.load(lists);
         clientContext.executeQueryAsync(function (sender, args) {
             each(lists, function (list) {
-                if (isListValid(list, listSetting)) {
+                if (isListIncludedInQuery(list, listSetting)) {
                     var listItemCollection = list.getItems(camlQuery);
 
                     clientContext.load(listItemCollection);
@@ -226,7 +226,7 @@
             var count = subWebs.length;
 
             each(lists, function (list) {
-                if (isListValid(list, listSetting)) {
+                if (isListIncludedInQuery(list, listSetting)) {
                     var listItemCollection = list.getItems(camlQuery);
 
                     clientContext.load(listItemCollection);

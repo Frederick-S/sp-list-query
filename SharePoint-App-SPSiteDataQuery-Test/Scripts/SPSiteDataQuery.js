@@ -19,14 +19,6 @@
         SPSiteDataQuery.lists = { 'baseType': 1 }; Limits the query to lists of the specified base type.
         SPSiteDataQuery.lists = { 'hidden': true }; Determines whether the query includes hidden lists.
         SPSiteDataQuery.lists = { 'lists': ['7A9FDBE6-0841-430a-8D9A-53355801B5D5', '3D18F506-FCA1-451e-B645-2D720DC84FD8'] }; This allows the query to include specific lists.
-    
-        A complete example of lists property is:
-    
-        SPSiteDataQuery.lists = {
-            'serverTemplate': 104, or 'baseType': 1, 'lists': ['7A9FDBE6-0841-430a-8D9A-53355801B5D5', '3D18F506-FCA1-451e-B645-2D720DC84FD8']
-            'hidden': true,
-            'maxListLimit': 500
-        };
         */
         this.lists = {};
 
@@ -66,6 +58,10 @@
     }
 
     SPSiteDataQuery.prototype.executeQueryAsync = function (successHandler, errorHandler) {
+        if (!this.webUrl) {
+            throw new Error('this.webUrl is empty.');
+        }
+
         var done = function (listlistItemCollections) {
             var listItems = [];
 

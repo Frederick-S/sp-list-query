@@ -63,3 +63,41 @@ siteDataQuery.lists = {
     'hidden': true // Determines whether the query includes hidden lists.
 };
 ```
+
+#### query
+This property defines the query used for SP.CamlQuery object.
+
+```js
+var siteDataQuery = new SPSiteDataQuery();
+siteDataQuery.webUrl = 'web url';
+siteDataQuery.query = '<Where><Eq><FieldRef Name=\'FileLeafRef\' /><Value Type=\'Text\'>some name</Value></Eq></Where>';
+```
+
+#### viewFields
+This property specifies the view fields used in the query.
+
+```js
+var siteDataQuery = new SPSiteDataQuery();
+siteDataQuery.webUrl = 'web url';
+siteDataQuery.query = '<FieldRef Name=\'Title\' Type=\'Text\' />';
+```
+
+### Methods
+#### executeQueryAsync(successHandler, errorHandler)
+Gets the list items across multiple lists, which can be located in multiple websites in the same website collection.
+
+```js
+var siteDataQuery = new SPSiteDataQuery();
+siteDataQuery.webUrl = 'web url';
+
+siteDataQuery.executeQueryAsync(function (listItems) {
+    for (var i = 0, length = listItems.length; i < length; i++) {
+        console.log(listItems[i].get_item('Title'));
+    }
+}, function (sender, args) {
+    alert(args.get_message());
+});
+```
+
+## License
+MIT.

@@ -79,7 +79,7 @@ This property specifies the view fields used in the query.
 ```js
 var siteDataQuery = new SPSiteDataQuery();
 siteDataQuery.webUrl = 'web url';
-siteDataQuery.query = '<FieldRef Name=\'Title\' Type=\'Text\' />';
+siteDataQuery.viewFields = '<FieldRef Name=\'Title\' Type=\'Text\' />';
 ```
 
 ### Methods

@@ -18,6 +18,7 @@
         SPSiteDataQuery.lists = { 'serverTemplate': 104 }; Limits the query to lists of the specified server template.
         SPSiteDataQuery.lists = { 'baseType': 1 }; Limits the query to lists of the specified base type.
         SPSiteDataQuery.lists = { 'hidden': true }; Determines whether the query includes hidden lists.
+        SPSiteDataQuery.lists = { 'maxListLimit': 500 } Limits the query to the total number of lists specified. By default, the limit is 1000. When set to 0, there is no limit to the number of lists that are considered.
         SPSiteDataQuery.lists = { 'lists': ['7A9FDBE6-0841-430a-8D9A-53355801B5D5', '3D18F506-FCA1-451e-B645-2D720DC84FD8'] }; This allows the query to include specific lists.
     
         A complete example of lists property is:

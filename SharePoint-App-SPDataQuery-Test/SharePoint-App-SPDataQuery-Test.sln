@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePoint-App-SPSiteDataQuery-Test", "SharePoint-App-SPSiteDataQuery-Test.csproj", "{5C360D89-F89C-4209-95F2-E549CD38EBA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePoint-App-SPDataQuery-Test", "SharePoint-App-SPDataQuery-Test.csproj", "{5C360D89-F89C-4209-95F2-E549CD38EBA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

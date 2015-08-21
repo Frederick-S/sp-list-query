@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9-->
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
-     Name="SharePoint-App-SPSiteDataQuery-Test"
+     Name="SharePoint-App-SPDataQuery-Test"
      ProductID="{abe1f9fe-c06e-4516-af21-091bc2182c8c}"
      Version="1.0.0.0"
      SharePointMinVersion="16.0.0.0"
 >
   <Properties>
-    <Title>SharePoint App SPSiteDataQuery Test</Title>
+    <Title>SharePoint App SPDataQuery Test</Title>
     <StartPage>~appWebUrl/Pages/Default.aspx?{StandardTokens}</StartPage>
   </Properties>
 

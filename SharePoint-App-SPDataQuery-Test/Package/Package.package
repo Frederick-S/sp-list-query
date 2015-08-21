@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="4db2be8e-c90d-45f5-b72a-117be33bca98" solutionId="4db2be8e-c90d-45f5-b72a-117be33bca98" resetWebServer="false" sharePointProductVersion="16.0" name="SharePoint_App_SPDataQuery_Test" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="bd4b4170-8727-469e-ad60-1ac2e4a371e5" />
+  </features>
+</package>

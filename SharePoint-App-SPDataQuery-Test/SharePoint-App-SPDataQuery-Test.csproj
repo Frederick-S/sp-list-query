@@ -60,7 +60,7 @@
     <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="Scripts\SPSiteDataQuery.js" />
+    <Content Include="Scripts\SPDataQuery.js" />
     <Content Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +105,6 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup>
-    <PreBuildEvent>copy $(ProjectDir)..\SPSiteDataQuery.js $(ProjectDir)Scripts /Y</PreBuildEvent>
+    <PreBuildEvent>copy $(ProjectDir)..\SPDataQuery.js $(ProjectDir)Scripts /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -1,7 +1,8 @@
 # SPSiteDataQuery.js
-JavaScript implementation of SPSiteDataQuery class.
+Data query utilities for SharePoint.
 
 ## Usage
+### SPSiteDataQuery
 ### Properties
 #### webUrl
 The this property to specify which web site to include in the query.

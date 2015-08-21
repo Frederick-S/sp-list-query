@@ -1,10 +1,10 @@
-# SPSiteDataQuery.js
+# SPDataQuery
 Data query utilities for SharePoint.
 
 ## Usage
 ### SPSiteDataQuery
-### Properties
-#### webUrl
+#### Properties
+##### webUrl
 The this property to specify which web site to include in the query.
 
 ```js
@@ -12,7 +12,7 @@ var siteDataQuery = new SPSiteDataQuery();
 siteDataQuery.webUrl = 'web url';
 ```
 
-#### crossDomain
+##### crossDomain
 Use this property to specify if the query cross domain. For example, make query to host web in an app web.
 
 ```js
@@ -21,7 +21,7 @@ siteDataQuery.webUrl = 'host web url';
 siteDataQuery.crossDomain = true.
 ```
 
-#### webs
+##### webs
 The webs property specifies which web sites to include in the query.
 By default, the query considers only the web site specified by the webUrl.
 You can broaden the scope of the query by setting the webs property containing a scope attribute.
@@ -39,7 +39,7 @@ siteDataQuery.webs = {
 };
 ```
 
-#### lists
+##### lists
 The lists property specifies which lists to include in the query.
 
 ```js
@@ -65,7 +65,7 @@ siteDataQuery.lists = {
 };
 ```
 
-#### query
+##### query
 This property defines the query used for SP.CamlQuery object.
 
 ```js
@@ -74,7 +74,7 @@ siteDataQuery.webUrl = 'web url';
 siteDataQuery.query = '<Where><Eq><FieldRef Name=\'FileLeafRef\' /><Value Type=\'Text\'>some name</Value></Eq></Where>';
 ```
 
-#### viewFields
+##### viewFields
 This property specifies the view fields used in the query.
 
 ```js
@@ -83,8 +83,8 @@ siteDataQuery.webUrl = 'web url';
 siteDataQuery.viewFields = '<FieldRef Name=\'Title\' Type=\'Text\' />';
 ```
 
-### Methods
-#### executeQueryAsync(successHandler, errorHandler)
+#### Methods
+##### executeQueryAsync(successHandler, errorHandler)
 Gets the list items across multiple lists, which can be located in multiple websites in the same website collection.
 
 ```js

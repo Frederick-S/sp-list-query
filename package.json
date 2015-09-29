@@ -1,0 +1,27 @@
+{
+  "name": "sp-list-query",
+  "version": "0.0.1",
+  "description": "Query list items among multiple SharePoint list.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frederick-S/sp-list-query.git"
+  },
+  "keywords": [
+    "SharePoint"
+  ],
+  "author": "Frederick-S",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Frederick-S/sp-list-query/issues"
+  },
+  "homepage": "https://github.com/Frederick-S/sp-list-query#readme",
+  "dependencies": {
+    "sp-context-helper": "0.0.4",
+    "sp-each": "0.0.5",
+    "sp-list-filter": "0.0.2"
+  }
+}

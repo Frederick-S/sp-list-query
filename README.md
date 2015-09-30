@@ -13,10 +13,11 @@ var listQuery = require('sp-list-query');
 var options = {
     'webUrl': 'web url',
     'useAppContextSite': false,
-    'filters': {
+    'listFilters': {
         'baseTemplate': 100 // Or baseType
     },
-    'camlQuery': new SP.CamlQuery()
+    'camlQuery': new SP.CamlQuery(),
+    'includes': 'Include(Title)'
 };
 
 listQuery(options, function (listItems) {
@@ -29,10 +30,11 @@ listQuery(options, function (listItems) {
 var options = {
     'webUrl': 'web url',
     'useAppContextSite': false,
-    'filters': function (list) {
+    'listFilters': function (list) {
         return list.get_baseType() === 0;
     },
-    'camlQuery': new SP.CamlQuery()
+    'camlQuery': new SP.CamlQuery(),
+    'includes': 'Include(Title)'
 };
 ```
 

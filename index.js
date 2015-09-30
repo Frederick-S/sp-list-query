@@ -3,7 +3,13 @@ var listFilter = require('sp-list-filter');
 var contextHelper = require('sp-context-helper');
 
 module.exports = function (options, done, error) {
-    listFilter(options, function (lists) {
+    var listOptions = {
+        webUrl: options.webUrl,
+        useAppContextSite: options.useAppContextSite,
+        filters: options.listFilters
+    };
+
+    listFilter(listOptions, function (lists) {
         var contextWrapper = contextHelper(options.webUrl, options.useAppContextSite);
         var clientContext = contextWrapper.clientContext;
         var allListItems = [];
@@ -14,7 +20,7 @@ module.exports = function (options, done, error) {
             var listItems = lists[i].getItems(camlQuery);
 
             listItemsCollection.push(listItems);
-            clientContext.load(listItems);
+            options.includes ? clientContext.load(listItems, options.includes) : clientContext.load(listItems);
         }
 
         if (listItemsCollection.length > 0) {

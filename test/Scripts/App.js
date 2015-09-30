@@ -71,16 +71,7 @@
 	};
 
 	listQuery(options, function (items) {
-	    var html = '<p>The list items in "Custom" list template based lists under host web are:</p>';
-	    html += '<ul>';
-
-	    for (var i = 0, length = items.length; i < length; i++) {
-	        html += '<li>' + items[i].get_item('Title') + '</li>';
-	    }
-
-	    html += '</ul>';
-
-	    $('#message').html(html);
+	    $('#message').html('There are ' + items.length + ' list items in "Custom List" based lists under host web.');
 	}, function (sender, args) {
 	    $('#message').text(args.get_message());
 	});
@@ -95,7 +86,13 @@
 	var contextHelper = __webpack_require__(6);
 
 	module.exports = function (options, done, error) {
-	    listFilter(options, function (lists) {
+	    var listOptions = {
+	        webUrl: options.webUrl,
+	        useAppContextSite: options.useAppContextSite,
+	        filters: options.listFilters
+	    };
+
+	    listFilter(listOptions, function (lists) {
 	        var contextWrapper = contextHelper(options.webUrl, options.useAppContextSite);
 	        var clientContext = contextWrapper.clientContext;
 	        var allListItems = [];
@@ -106,7 +103,7 @@
 	            var listItems = lists[i].getItems(camlQuery);
 
 	            listItemsCollection.push(listItems);
-	            clientContext.load(listItems);
+	            options.includes ? clientContext.load(listItems, options.includes) : clientContext.load(listItems);
 	        }
 
 	        if (listItemsCollection.length > 0) {

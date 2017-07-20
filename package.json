@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Frederick-S/sp-list-query#readme",
   "dependencies": {
-    "sp-context-helper": "0.0.4",
-    "sp-each": "0.0.5",
+    "sp-context-helper": "1.0.3",
+    "sp-each": "1.0.2",
     "sp-list-filter": "0.0.2"
   }
 }

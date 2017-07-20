@@ -1,4 +1,6 @@
 # sp-list-query
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Frederick-S/sp-list-query.svg)](https://greenkeeper.io/)
 Query list items among multiple SharePoint list.
 
 ## Installation
